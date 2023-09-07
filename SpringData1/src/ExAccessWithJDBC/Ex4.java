@@ -20,7 +20,7 @@ public class Ex4 {
         String minionTown = minionInfo[3];
         String villainName = sc.nextLine().split(" ")[1];
 
-        int townId = getOrInsettTown(connection, minionTown);
+        int townId = getOrInsertTown(connection, minionTown);
         int villainId = getOrInsertVillain(connection, villainName);
         //insertTown.setString(1, minionName);
         //insertTown.setInt(1, minionAge);
@@ -68,7 +68,7 @@ public class Ex4 {
         return villainId;
     }
 
-    private static int getOrInsettTown(Connection connection, String minionTown) throws SQLException {
+    private static int getOrInsertTown(Connection connection, String minionTown) throws SQLException {
         PreparedStatement selectTown = connection.prepareStatement("SELECT id FROM towns WHERE name = ?");
 
         selectTown.setString(1, minionTown);

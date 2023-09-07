@@ -25,8 +25,8 @@ public class Ex3 {
             System.out.printf("No villain with ID %d exists in the database.", villainId);
             return;
         }
-        String villaintName = villainSet.getString("name");
-        System.out.println("Villain: " + villaintName);
+        String villainName = villainSet.getString("name");
+        System.out.println("Villain: " + villainName);
 
         PreparedStatement minionStatement = connection.prepareStatement("""
                 SELECT name, age

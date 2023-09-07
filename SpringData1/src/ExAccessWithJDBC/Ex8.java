@@ -26,7 +26,7 @@ public class Ex8 {
                     WHERE m.id = ?;
                     """);
             int idsOfMinion = idsOfMinions[i];
-            updateMinions.setInt(1, idsOfMinions[i]);
+            updateMinions.setInt(1, idsOfMinion);
             int test = updateMinions.executeUpdate();
         }
         PreparedStatement selectMinions = connection.prepareStatement("SELECT name, age FROM minions;");
