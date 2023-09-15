@@ -82,4 +82,15 @@ public class BasicShampoo {
     public Set<BasicIngredient> getIngredients(){
         return Collections.unmodifiableSet(this.ingredients);
     }
+
+    @Override
+    public String toString() {
+        return "BasicShampoo{" +
+                "name='" + name + '\'' +
+                ", label=" + label.getId() +
+                ", batch=" + batch.getShampoos().size() +
+                ", ingredients=" + ingredients.size() +
+                ", names=" + names.size() +
+                '}';
+    }
 }

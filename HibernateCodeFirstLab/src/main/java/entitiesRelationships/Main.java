@@ -10,7 +10,7 @@ import java.util.Set;
 
 public class Main {
     public static void main(String[] args) {
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("PU_Name");
+        EntityManagerFactory emf = Persistence.createEntityManagerFactory("onlyTest");
         EntityManager em = emf.createEntityManager();
         em.getTransaction().begin();
 
@@ -24,7 +24,7 @@ public class Main {
         shampoo.addIngredient(ingredient);
         shampoo.addIngredient(ingredient2);
 
-        List<String> names = Arrays.asList("Pesho", "Gosho", "Alex");
+        List<String> names = Arrays.asList("Syoss", "Wash&Go", "Aroma");
         shampoo.setNames(names);
 
         em.persist(ingredient);
@@ -32,6 +32,7 @@ public class Main {
         em.persist(batch);
         em.persist(label);
         em.persist(shampoo);
+//        em.getTransaction().commit();
 
         ProductionBatch productionBatch = em.find(ProductionBatch.class, 1);
         Set<BasicShampoo> shampoos = productionBatch.getShampoos();
