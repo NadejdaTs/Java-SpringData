@@ -5,6 +5,8 @@ import org.football.entities.locationEntities.Town;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Set;
 
 @Entity
 @Table(name = "teams")
@@ -18,10 +20,20 @@ public class Team {
     @Column(name = "initials")
     private LetterInitials letterInitials;
 
+    @Column(name = "primary_kit_color")
     private Color primaryKitColor;
+
+    @Column(name = "secondary_kit_color")
     private Color secondaryKitColor;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "town_id", referencedColumnName = "id")
     private Town town;
     private BigDecimal budget;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "player_id", referencedColumnName = "id")
+    private Set<Player> players;
 
     public Team() {}
 
@@ -88,5 +100,13 @@ public class Team {
 
     public void setBudget(BigDecimal budget) {
         this.budget = budget;
+    }
+
+    public Set<Player> getPlayers() {
+        return Collections.unmodifiableSet(players);
+    }
+
+    public void setPlayers(Set<Player> players) {
+        this.players = players;
     }
 }

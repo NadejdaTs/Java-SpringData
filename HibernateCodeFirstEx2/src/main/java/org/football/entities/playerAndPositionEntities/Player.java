@@ -1,6 +1,10 @@
 package org.football.entities.playerAndPositionEntities;
 
+import org.football.entities.GamesAndCompetition.Game;
+
 import javax.persistence.*;
+import java.util.Collections;
+import java.util.Set;
 
 @Entity
 @Table(name = "players")
@@ -10,18 +14,28 @@ public class Player {
     private int id;
 
     private String name;
+
+    @Column(name = "squad_number")
     private int squadNumber;
-    private Team team;
-    private Position position;
+
+    @Column(name = "team_id")
+    private Team teamId;
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "position_id", referencedColumnName = "id")
+    private Position positionId;
     private boolean isCurrInjured;
+
+    @ManyToMany(mappedBy = "players", targetEntity = Game.class)
+    private Set<Game> games;
 
     public Player() {}
 
-    public Player(String name, int squadNumber, Team team, Position position, boolean isCurrInjured) {
+    public Player(String name, int squadNumber, Team teamId, Position positionId, boolean isCurrInjured) {
         this.name = name;
         this.squadNumber = squadNumber;
-        this.team = team;
-        this.position = position;
+        this.teamId = teamId;
+        this.positionId = positionId;
         this.isCurrInjured = isCurrInjured;
     }
 
@@ -49,20 +63,20 @@ public class Player {
         this.squadNumber = squadNumber;
     }
 
-    public Team getTeam() {
-        return team;
+    public Team getTeamId() {
+        return teamId;
     }
 
-    public void setTeam(Team team) {
-        this.team = team;
+    public void setTeamId(Team teamId) {
+        this.teamId = teamId;
     }
 
-    public Position getPosition() {
-        return position;
+    public Position getPositionId() {
+        return positionId;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    public void setPositionId(Position positionId) {
+        this.positionId = positionId;
     }
 
     public boolean isCurrInjured() {
@@ -71,5 +85,13 @@ public class Player {
 
     public void setCurrInjured(boolean currInjured) {
         isCurrInjured = currInjured;
+    }
+
+    public Set<Game> getGames() {
+        return Collections.unmodifiableSet(games);
+    }
+
+    public void setGames(Set<Game> games) {
+        this.games = games;
     }
 }

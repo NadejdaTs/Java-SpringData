@@ -3,6 +3,7 @@ package org.football.entities.bets;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @Entity
 @Table(name = "bets")
@@ -18,6 +19,8 @@ public class Bet {
     private LocalDateTime dateTimeOfBet;
 
     @Column(name = "user_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User userId;
 
     public Bet() {}

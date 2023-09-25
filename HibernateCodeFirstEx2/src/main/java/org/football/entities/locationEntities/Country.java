@@ -3,6 +3,7 @@ package org.football.entities.locationEntities;
 import org.football.entities.enums.CountryCode;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "countries")
@@ -14,14 +15,23 @@ public class Country {
 
     @Column(name = "country_code")
     private CountryCode countryCode;
-    private Continent continent;
+
+    @ManyToMany
+    @JoinTable(name = "country_continent",
+            joinColumns = @JoinColumn(name = "county_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "continent_id", referencedColumnName = "id")
+    )
+    private Set<Continent> continent;
+
+    @OneToMany(mappedBy = "town", targetEntity = Town.class)
+    private Set<Town> towns;
 
     public Country() {}
 
-    public Country(String name, CountryCode countryCode, Continent continent) {
+    public Country(String name, CountryCode countryCode) {
         this.name = name;
         this.countryCode = countryCode;
-        this.continent = continent;
+//        this.continent = continent;
     }
 
     public int getId() {
@@ -48,11 +58,11 @@ public class Country {
         this.countryCode = countryCode;
     }
 
-    public Continent getContinent() {
+    /*public Continent getContinent() {
         return continent;
     }
 
     public void setContinent(Continent continent) {
         this.continent = continent;
-    }
+    }*/
 }

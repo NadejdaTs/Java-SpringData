@@ -1,11 +1,14 @@
 package org.football.entities.GamesAndCompetition;
 
+import org.football.entities.playerAndPositionEntities.Player;
 import org.football.entities.playerAndPositionEntities.Team;
 import org.football.entities.bets.Bet;
 import org.football.entities.bets.BetGame;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.Set;
 
 @Entity
 @Table(name = "games")
@@ -39,10 +42,26 @@ public class Game {
     private BetGame drawGameBetRate;
 
     @Column(name = "round_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "round_id", referencedColumnName = "id")
     private Round roundId;
 
     @Column(name = "competition_id")
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "competition_id", referencedColumnName = "id")
     private Competition competitionId;
+
+    @ManyToMany
+    @JoinTable(name = "games_players",
+    joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"),
+    inverseJoinColumns = @JoinColumn(name = "player_id", referencedColumnName = "id"))
+    private Set<Player> players;
+
+    @ManyToMany
+    @JoinTable(name = "games_betGames",
+            joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "bet_games_id", referencedColumnName = "id"))
+    private Set<Bet> bets;
 
     public Game() {}
 
@@ -146,5 +165,21 @@ public class Game {
 
     public void setCompetitionId(Competition competitionId) {
         this.competitionId = competitionId;
+    }
+
+    public Set<Player> getPlayers() {
+        return Collections.unmodifiableSet(players);
+    }
+
+    public void setPlayers(Set<Player> players) {
+        this.players = players;
+    }
+
+    public Set<Bet> getBets() {
+        return Collections.unmodifiableSet(bets);
+    }
+
+    public void setBets(Set<Bet> bets) {
+        this.bets = bets;
     }
 }
